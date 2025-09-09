@@ -1,98 +1,273 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# User Management System
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+[![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white)](https://nestjs.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![MySQL](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
+[![JWT](https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JSON%20web%20tokens&logoColor=white)](https://jwt.io/)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 📋 Description
 
-## Description
+User management system developed with NestJS, offering complete authentication and user CRUD functionality. The project implements JWT authentication, data validation, password encryption, and a robust RESTful API.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🚀 Features
 
-## Project setup
+- **JWT Authentication**: Secure login system with JWT tokens
+- **User CRUD**: Complete create, read, update, and delete operations
+- **Data Validation**: Robust validation with class-validator
+- **Encryption**: Passwords encrypted with bcrypt
+- **Database**: MySQL integration using TypeORM
+- **Migrations**: Migration system for schema control
+- **User Profile**: Protected endpoints for profile management
 
+## 🛠️ Technologies Used
+
+- **Framework**: NestJS 11.x
+- **Language**: TypeScript
+- **Database**: MySQL
+- **ORM**: TypeORM
+- **Authentication**: JWT + Passport
+- **Validation**: class-validator + class-transformer
+- **Encryption**: bcrypt
+- **Testing**: Jest
+
+## 📦 Installation
+
+### Prerequisites
+
+- Node.js (version 18 or higher)
+- MySQL (version 8.0 or higher)
+- npm or yarn
+
+### Installation Steps
+
+1. **Clone the repository**
 ```bash
-$ npm install
+git clone <repository-url>
+cd RID218399_Desafio07
 ```
 
-## Compile and run the project
-
+2. **Install dependencies**
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+npm install
 ```
 
-## Run tests
+3. **Configure environment variables**
+Create a `.env` file in the project root with the following variables:
 
-```bash
-# unit tests
-$ npm run test
+```env
+# Database Configuration
+DB_HOST=localhost
+DB_PORT=3306
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+DB_NAME=database_name
+DB_SYNC=true
+DB_LOGGING=true
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+# Application Configuration
+PORT=3000
+JWT_SECRET=your_jwt_secret_here
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
+4. **Run migrations**
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+npm run typeorm migration:run
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+5. **Start the application**
+```bash
+# Development
+npm run start:dev
 
-## Resources
+# Production
+npm run build
+npm run start:prod
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+## 📚 API Documentation
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Authentication
 
-## Support
+#### POST `/auth/login`
+Performs user login and returns JWT token.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+**Body:**
+```json
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
+```
 
-## Stay in touch
+**Response:**
+```json
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Users
 
-## License
+#### POST `/users`
+Creates a new user.
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+**Body:**
+```json
+{
+  "name": "John Doe",
+  "username": "john123",
+  "email": "john@example.com",
+  "password": "password123"
+}
+```
+
+#### GET `/users`
+Lists all users (no authentication required).
+
+#### GET `/users/:id`
+Finds a specific user by ID.
+
+#### PUT `/users/:id`
+Updates a specific user.
+
+**Body:**
+```json
+{
+  "name": "John Doe Updated",
+  "email": "john.new@example.com"
+}
+```
+
+#### DELETE `/users/:id`
+Removes a specific user.
+
+### User Profile (Protected)
+
+#### GET `/users/me`
+Returns information about the authenticated user.
+
+**Headers:**
+```
+Authorization: Bearer <jwt_token>
+```
+
+#### PUT `/users/me`
+Updates information for the authenticated user.
+
+**Headers:**
+```
+Authorization: Bearer <jwt_token>
+```
+
+**Body:**
+```json
+{
+  "name": "New Name",
+  "email": "new@example.com"
+}
+```
+
+## 🧪 Testing
+
+```bash
+# Unit tests
+npm run test
+
+# Watch mode tests
+npm run test:watch
+
+# End-to-end tests
+npm run test:e2e
+
+# Test coverage
+npm run test:cov
+```
+
+## 🔧 Available Scripts
+
+```bash
+# Development
+npm run start:dev
+
+# Production build
+npm run build
+
+# Start in production
+npm run start:prod
+
+# Linting
+npm run lint
+
+# Code formatting
+npm run format
+
+# TypeORM migrations
+npm run typeorm migration:generate -- -n MigrationName
+npm run typeorm migration:run
+```
+
+## 🏗️ Project Structure
+
+```
+src/
+├── auth/                 # Authentication module
+│   ├── dto/             # Data Transfer Objects
+│   ├── auth.controller.ts
+│   ├── auth.service.ts
+│   ├── auth.module.ts
+│   └── jwt.strategy.ts
+├── user/                # User module
+│   ├── dto/             # Data Transfer Objects
+│   ├── user.controller.ts
+│   ├── user.service.ts
+│   ├── user.entity.ts
+│   └── user.module.ts
+├── migrations/          # Database migrations
+├── app.module.ts        # Main module
+└── main.ts             # Entry file
+```
+
+## 🔒 Security
+
+- Passwords are encrypted using bcrypt
+- JWT authentication with secure tokens
+- Input data validation
+- Protected endpoints with guards
+- Authorization headers required for sensitive routes
+
+## 🚀 Deployment
+
+### Production Environment Variables
+
+```env
+DB_SYNC=false
+DB_LOGGING=false
+NODE_ENV=production
+```
+
+### Production Build
+
+```bash
+npm run build
+npm run start:prod
+```
+
+## 🤝 Contributing
+
+1. Fork the project
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+## 👨‍💻 Author
+
+**RID218399** - Challenge 07
+
+---
+
+⭐ If this project was helpful to you, consider giving it a star!
