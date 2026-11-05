@@ -1,19 +1,19 @@
 import { NestFactory } from '@nestjs/core';
+import type { Express, Request, Response } from 'express';
 import { AppModule } from './app.module';
+import { configureApp } from './app.setup';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  configureApp(app);
 
-  // obtém a instância subjacente (Express/Fastify) e registra rotas simples
-  const server = app.getHttpAdapter().getInstance() as any;
+  const server = app.getHttpAdapter().getInstance() as Express;
 
-  // rota raiz
-  server.get('/', (req: any, res: any) => {
-    res.json({ message: 'API is running 🚀' });
+  server.get('/', (_req: Request, res: Response) => {
+    res.json({ message: 'API is running' });
   });
 
-  // rota health
-  server.get('/health', (req: any, res: any) => {
+  server.get('/health', (_req: Request, res: Response) => {
     res.json({
       status: 'ok',
       uptime: process.uptime(),
@@ -24,4 +24,4 @@ async function bootstrap() {
   await app.listen(process.env.PORT ?? 3000);
   console.log(`Server running on port ${process.env.PORT ?? 3000}`);
 }
-bootstrap();
+void bootstrap();

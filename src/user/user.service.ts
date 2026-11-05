@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
@@ -6,14 +10,34 @@ import { User } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
+export type PublicUser = Omit<User, 'password'>;
+
+function withoutPassword(user: User): PublicUser {
+  return {
+    id: user.id,
+    name: user.name,
+    username: user.username,
+    email: user.email,
+  };
+}
+
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
   ) {}
- 
-  async createUser(data: CreateUserDto): Promise<Omit<User, 'password'>> {
+
+  async createUser(data: CreateUserDto): Promise<PublicUser> {
+    // The unique indexes on email and username are the real guarantee; this
+    // check turns the common case into a 409 instead of a database error.
+    const taken = await this.userRepository.findOne({
+      where: [{ email: data.email }, { username: data.username }],
+    });
+    if (taken) {
+      throw new ConflictException('E-mail or username already in use');
+    }
+
     const hashedPassword = await bcrypt.hash(data.password, 10);
 
     const user = this.userRepository.create({
@@ -22,27 +46,22 @@ export class UserService {
     });
 
     const saved = await this.userRepository.save(user);
-    const { password, ...result } = saved; 
-    return result;
+    return withoutPassword(saved);
   }
 
-  async findAll(): Promise<Omit<User, 'password'>[]> {
+  async findAll(): Promise<PublicUser[]> {
     const users = await this.userRepository.find();
-    return users.map(({ password, ...rest }) => rest);
+    return users.map(withoutPassword);
   }
 
-  async findOne(id: string): Promise<Omit<User, 'password'>> {
+  async findOne(id: string): Promise<PublicUser> {
     const user = await this.userRepository.findOne({ where: { id } });
     if (!user) throw new NotFoundException('User not found');
 
-    const { password, ...result } = user;
-    return result;
+    return withoutPassword(user);
   }
 
-  async updateUser(
-    id: string,
-    data: UpdateUserDto
-  ): Promise<Omit<User, 'password'>> {
+  async updateUser(id: string, data: UpdateUserDto): Promise<PublicUser> {
     const user = await this.userRepository.findOne({ where: { id } });
     if (!user) throw new NotFoundException('User not found');
 
@@ -54,10 +73,9 @@ export class UserService {
 
     const updated = await this.userRepository.findOne({ where: { id } });
     if (!updated) {
-      throw new Error('Usuário não encontrado');
+      throw new NotFoundException('User not found');
     }
-    const { password, ...result } = updated;
-    return result;
+    return withoutPassword(updated);
   }
 
   async deleteUser(id: string): Promise<void> {
