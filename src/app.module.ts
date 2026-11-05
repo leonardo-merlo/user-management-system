@@ -15,7 +15,7 @@ function getEnv(key: string, config: ConfigService): string {
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true, 
+      isGlobal: true,
       envFilePath: '.env',
     }),
     TypeOrmModule.forRootAsync({
